@@ -376,7 +376,7 @@ while wait() do
             fireproximityprompt(prox, 1)
         end
         for i, v in pairs(workspace:GetChildren()) do
-            if v.Name = "Meteorite" then
+            if v.Name == "Meteorite" then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Handle.CFrame
             end
         end
