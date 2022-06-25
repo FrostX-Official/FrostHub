@@ -437,10 +437,10 @@ function UILibrary.Load(GUITitle)
 				if enterPressed then
 					Callback(HiddenTextBox.Text)
 					Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(45,45,45)})
-					Tween(HiddenButton, {TextTransparency = 0.5})
+					Tween(HiddenTextBox, {TextTransparency = 0.5})
 					wait(TweenTime)
 					Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(35,35,35)})
-					Tween(HiddenButton, {TextTransparency = 0})
+					Tween(HiddenTextBox, {TextTransparency = 0})
 				end
 			end)
 		end
