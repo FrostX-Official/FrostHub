@@ -417,6 +417,43 @@ function UILibrary.Load(GUITitle)
 			end)
 		end
 		
+		function PageLibrary.AddTextBox(Text, Callback, Parent, Underline)
+			local TextBoxContainer = Frame()
+			TextBoxContainer.Name = Text.."TEXTBOX"
+			TextBoxContainer.Size = UDim2.new(1,0,0,20)
+			TextBoxContainer.BackgroundTransparency = 1
+			TextBoxContainer.Parent = Parent or DisplayPage
+			
+			local TextBoxForeground = RoundBox(5)
+			TextBoxForeground.Name = "TextBoxForeground"
+			TextBoxForeground.Size = UDim2.new(1,0,1,0)
+			TextBoxForeground.ImageColor3 = Color3.fromRGB(35,35,35)
+			TextBoxForeground.Parent = ButtonContainer
+			
+			if Underline then
+				local TextSize = TextService:GetTextSize(Text, 12, Enum.Font.Gotham, Vector2.new(0,0))
+			
+				local BottomEffect = Frame()
+				BottomEffect.Size = UDim2.new(0,TextSize.X,0,1)
+				BottomEffect.Position = UDim2.new(0.5,(-TextSize.X/2)-1,1,-1)
+				BottomEffect.BackgroundColor3 = Color3.fromRGB(255,255,255)
+				BottomEffect.BackgroundTransparency = 0.5
+				BottomEffect.Parent = TextBoxForeground
+			end
+			
+			local HiddenTextBox = TextBox(Text, 12)
+			HiddenTextBox.Parent = TextBoxForeground
+			
+			HiddenTextBox.ReleaseFocus:Connect(function()
+				Callback(HiddenTextBox.Text)
+				Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(45,45,45)})
+				Tween(HiddenButton, {TextTransparency = 0.5})
+				wait(TweenTime)
+				Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(35,35,35)})
+				Tween(HiddenButton, {TextTransparency = 0})
+			end)
+		end
+		
 		function PageLibrary.AddLabel(Text)
 			local LabelContainer = Frame()
 			LabelContainer.Name = Text.."LABEL"
