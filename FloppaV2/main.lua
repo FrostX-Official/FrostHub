@@ -1,6 +1,6 @@
 -- LIB : Floppa V2 by Frost X#6215
 
-local GuiLib = loadstring(game:HttpGet("https://pastebin.com/raw/V1ca2q9s"), true)()
+local GuiLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/FrostX-Official/roblox-scripts/main/FloppaV2/GuiLib.lua"), true)()
 
 -- VARIABLES ~ TOGGLES
 
@@ -25,8 +25,11 @@ getgenv().AutoRoommateCooldown2 = false
 getgenv().Debug = false
 
 getgenv().AutoVault = false
-getgenv().Item = "Milk"
+getgenv().Item = ""
 getgenv().VaultTPBack = false
+getgenv().VaultFull = false
+
+getgenv().FloppaName = "FrostX"
 
 -- OTHER
  
@@ -35,13 +38,14 @@ local BuyEvent = game:GetService("ReplicatedStorage").Events.Unlock
 local CollectRentEvent = game:GetService("ReplicatedStorage").Events["Collect Rent"]
 local RaiseRentEvent = game:GetService("ReplicatedStorage").Events["Raise Rent"]
 
-local MainWindow = GuiLib.Load("FLOPPA SCRIPT V2")
+local MainWindow = GuiLib.Load("FLOPPA SCRIPT V2", true)
 
 local Main = MainWindow.AddPage("Main", false)
 local Misc = MainWindow.AddPage("Misc", false)
 local Shop = MainWindow.AddPage("Shop", false)
 local Teleports = MainWindow.AddPage("Teleports", false) -- still no TPs lol
 local Credits = MainWindow.AddPage("Credits", false)
+local Premium = MainWindow.AddPage("Premium", false)
 
 -- CREDITS
 
@@ -51,9 +55,9 @@ local Credits2 = Credits.AddLabel("Idea - Frost X#6215")
 local CreditsOwn1 = Credits.AddLabel("Game Owner 1 - RealXyIo#0059")
 local CreditsOwn2 = Credits.AddLabel("Game Owner 2 - ShiiroShogun#1105")
 
-local Credits3 = Credits.AddLabel("Script Version: v1.5")
+local Credits3 = Credits.AddLabel("Script Version: v1.6 (AutoUpgrade)")
 
-local Credits3 = Credits.AddLabel("UI Lib - Kinlei#6459")
+local Credits3 = Credits.AddLabel("UI Lib - Kinlei#6459 (modified by Frost X#6215)")
 
 -- MAKE PARTS
 
@@ -115,8 +119,6 @@ end
 
 -- FUNCTIONS
 
-wait(0.5) -- wait for load to make sure there will be no errors
-
 local function notification_new(title, text, duration)
     if getgenv().Debug then
         game.StarterGui:SetCore("SendNotification", {
@@ -127,8 +129,19 @@ local function notification_new(title, text, duration)
     end
 end
 
+writefile("FromizRug.png", game:HttpGet("https://raw.githubusercontent.com/FrostX-Official/roblox-scripts/main/FloppaV2/assets/FromizRug.png"))
+
+if workspace.Unlocks:FindFirstChild("Fancy Rug") then
+    workspace.Unlocks["Fancy Rug"].Rug.Texture = getcustomasset("FromizRug.png")
+    delfile("FromizRug.png")
+end
+
 local TPHome = Teleports.AddButton("IN-Home Teleport", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.InsidePoint.CFrame
+end)
+
+local TPHome = Teleports.AddButton("Basement Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SpawnLocation.CFrame
 end)
 
 local ShopLabel = Shop.AddLabel("Shop Menus")
@@ -164,6 +177,7 @@ local MiscNostalgicMode = Misc.AddButton("Nostalgic Mode (Fall Ambience)", funct
         music.SoundId = "rbxassetid://9802437816"
         music.Parent = workspace
         music.TimePosition = 30
+        music.Looped = true
 
         notification_new("Nostalgic mode", "Toggled ON", 2)
 
@@ -182,6 +196,22 @@ local MiscNostalgicMode = Misc.AddButton("Nostalgic Mode (Fall Ambience)", funct
         end
     end
 end)
+
+local FloppaRenaming = Misc.AddLabel("Rename your babies!")
+
+local MiscRenameFloppas = Misc.AddTextBox("Floppa Name", function(text)
+    getgenv().FloppaName = text
+end)
+
+local MiscRenameFloppas = Misc.AddButton("Rename All Baby Floppas", function()
+    for i, v in pairs(workspace.Unlocks:GetChildren()) do
+        if v.Name == "Baby Floppa" then
+            v.Display.Frame.NameLabel.Text = getgenv().FloppaName
+        end
+    end
+end)
+
+local FloppaRenaming2 = Misc.AddLabel("~ ⭕ ~")
 
 local AutoVault = Main.AddLabel("Auto-Vaulting")
 
@@ -254,7 +284,6 @@ local MainAutoClick = Main.AddToggle("AutoClicker", false, function(toggled)
         getgenv().AutoClicker = false
     end
 end)
-
 local MainAutoCollectMoney = Main.AddToggle("AutoCollect Money", false, function(toggled)
     if toggled then
         getgenv().AutoCollectMoney = true
@@ -262,7 +291,13 @@ local MainAutoCollectMoney = Main.AddToggle("AutoCollect Money", false, function
         getgenv().AutoCollectMoney = false
     end
 end)
-
+local MainAutoUpgrade = Main.AddToggle("AutoUpgrade", false, function(toggled)
+    if toggled then
+        getgenv().AutoUpgrade = true
+    else
+        getgenv().AutoUpgrade = false
+    end
+end)
 local MainAutoSave = Main.AddToggle("AutoSave (LAG!)", false, function(toggled)
     if toggled then
         getgenv().AutoSave = true
@@ -313,8 +348,6 @@ end)
 
 local AutoVault = Main.AddLabel("In Developing...")
 
-local MainAutoUpgrade = Main.AddToggle("AutoUpgrade [InDev]", false, function() end)
-
 local MainNoSound = Main.AddToggle("No Sound (Do not toggle) [BETA-FUNCTION]", false, function(toggled)
     if toggled then
         getgenv().NoSound = true
@@ -333,6 +366,65 @@ while wait() do
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Floppa.HumanoidRootPart.CFrame + Vector3.new(0, 1, 0)
                 fireproximityprompt(prox, 1)
             end
+        end
+    end
+    if getgenv().AutoUpgrade then
+        local findPoster = workspace.Unlocks:FindFirstChild("Cat Poster")
+        local findBed = workspace.Unlocks:FindFirstChild("Cat Bed")
+        local findScratchPost = workspace.Unlocks:FindFirstChild("Scratching Post")
+        local findBallOfYarn = workspace.Unlocks:FindFirstChild("Ball of Yarn")
+        local findHouseplant = workspace.Unlocks:FindFirstChild("Houseplant")
+        local findMsFloppa = workspace.Unlocks:FindFirstChild("Ms. Floppa")
+        local findFloppaPaint = workspace.Unlocks:FindFirstChild("Floppa Painting")
+        local findGameRig = workspace.Unlocks:FindFirstChild("Gaming Rig")
+        local findDreamCatch = workspace.Unlocks:FindFirstChild("Dream Catcher")
+        local findSogga = workspace.Unlocks:FindFirstChild("Sogga")
+        local findFancyRug = workspace.Unlocks:FindFirstChild("Fancy Rug")
+        local findHDTV = workspace.Unlocks:FindFirstChild("HD TV")
+        local findJinx = workspace.Unlocks:FindFirstChild("Jinx")
+        local findCeilingFan = workspace.Unlocks:FindFirstChild("Ceiling Fan")
+
+        if not findPoster and game.Players.LocalPlayer.Money.Value >= 50 then
+            BuyEvent:FireServer("Cat Poster", "the_interwebs")
+        end
+        if not findScratchPost and game.Players.LocalPlayer.Money.Value >= 75 then
+            BuyEvent:FireServer("Scratching Post", "the_interwebs")
+        end
+        if not findBallOfYarn and game.Players.LocalPlayer.Money.Value >= 150 then
+            BuyEvent:FireServer("Ball of Yarn", "the_interwebs")
+        end
+        if not findBed and game.Players.LocalPlayer.Money.Value >= 500 then
+            BuyEvent:FireServer("Cat Bed", "the_interwebs")
+        end
+        if not findHouseplant and game.Players.LocalPlayer.Money.Value >= 500 then
+            BuyEvent:FireServer("Houseplant", "the_interwebs")
+        end
+        if not findMsFloppa and game.Players.LocalPlayer.Money.Value >= 1000 then
+            BuyEvent:FireServer("Floppa Painting", "the_interwebs")
+        end
+        if not findFloppaPaint and game.Players.LocalPlayer.Money.Value >= 1000 then
+            BuyEvent:FireServer("Floppa Painting", "the_interwebs")
+        end
+        if not findGameRig and game.Players.LocalPlayer.Money.Value >= 2000 then
+            BuyEvent:FireServer("Gaming Rig", "the_interwebs")
+        end
+        if not findDreamCatch and game.Players.LocalPlayer.Money.Value >= 3000 then
+            BuyEvent:FireServer("Dream Catcher", "the_interwebs")
+        end
+        if not findSogga and game.Players.LocalPlayer.Money.Value >= 5000 then
+            BuyEvent:FireServer("Sogga", "the_interwebs")
+        end
+        if not findFancyRug and game.Players.LocalPlayer.Money.Value >= 7500 then
+            BuyEvent:FireServer("Sogga", "the_interwebs")
+        end
+        if not findHDTV and game.Players.LocalPlayer.Money.Value >= 15000 then
+            BuyEvent:FireServer("HD TV", "the_interwebs")
+        end
+        if not findJinx and game.Players.LocalPlayer.Money.Value >= 25000 then
+            BuyEvent:FireServer("Jinx", "the_interwebs")
+        end
+        if not findCeilingFan and game.Players.LocalPlayer.Money.Value >= 30000 then
+            BuyEvent:FireServer("Ceiling Fan", "the_interwebs")
         end
     end
     if getgenv().AutoPetAlways then
@@ -474,17 +566,29 @@ while wait() do
     end
 
     if getgenv().AutoVault then
-        for i, item in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-            if item.Name == getgenv().Item then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Unlocks["Small Vault"].Base.CFrame
+        local getVault = workspace.Unlocks:FindFirstChild("Small Vault")
 
-                item.Parent = game.Players.LocalPlayer.Character
-                wait(0.2)
-                fireproximityprompt(workspace.Unlocks["Small Vault"].Base.ProximityPrompt, 1)
-                notification_new("Auto-Vault", "Added item to Vault.", 0.2)
-                wait(0.2)
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.InsidePoint.CFrame
-                notification_new("Auto-Vault", "Teleported IN-Home", 0.4)
+        if getVault then
+            for i, item in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                if getgenv().Item ~= "" and item.Name == getgenv().Item then
+                    if #game.ReplicatedStorage["Small Vault"]:GetChildren() ~= 100 then
+                        getgenv().VaultFull = false
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Unlocks["Small Vault"].Base.CFrame
+
+                        item.Parent = game.Players.LocalPlayer.Character
+                        wait(0.2)
+                        fireproximityprompt(workspace.Unlocks["Small Vault"].Base.ProximityPrompt, 1)
+                        notification_new("Auto-Vault", "Added item to Vault.", 0.2)
+                        wait(0.2)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.InsidePoint.CFrame
+                        notification_new("Auto-Vault", "Teleported IN-Home", 0.4)
+                    else
+                        if not getgenv().VaultFull then
+                            getgenv().VaultFull = true
+                            notification_new("Auto-Vault", "Vault is FULL! Please clear it if you need to store items.", 0.01)
+                        end
+                    end
+                end
             end
         end
     end
