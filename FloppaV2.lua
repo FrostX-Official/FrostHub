@@ -131,10 +131,6 @@ local TPHome = Teleports.AddButton("IN-Home Teleport", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.InsidePoint.CFrame
 end)
 
-local TPHome = Teleports.AddButton("Basement Teleport", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SpawnLocation.CFrame
-end)
-
 local ShopLabel = Shop.AddLabel("Shop Menus")
 local ShopMenu = Shop.AddButton("Shop Menu", function()
     if game.Players.LocalPlayer.PlayerGui.PlayerUI["the_interwebs"].Visible == false then
