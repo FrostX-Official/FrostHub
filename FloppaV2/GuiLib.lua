@@ -437,15 +437,13 @@ function UILibrary.Load(GUITitle)
 			local HiddenTextBox = TextBox(Text, 12)
 			HiddenTextBox.Parent = TextBoxForeground
 			
-			HiddenTextBox.FocusLost:Connect(function(enterPressed)
-				if enterPressed then
-					Callback(HiddenTextBox.Text)
-					Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(45,45,45)})
-					Tween(HiddenTextBox, {TextTransparency = 0.5})
-					wait(TweenTime)
-					Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(35,35,35)})
-					Tween(HiddenTextBox, {TextTransparency = 0})
-				end
+			HiddenTextBox.FocusLost:Connect(function(enterPressed, input)
+				Callback(HiddenTextBox.Text)
+				Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(45,45,45)})
+				Tween(HiddenTextBox, {TextTransparency = 0.5})
+				wait(TweenTime)
+				Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(35,35,35)})
+				Tween(HiddenTextBox, {TextTransparency = 0})
 			end)
 		end
 		
