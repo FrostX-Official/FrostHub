@@ -428,7 +428,7 @@ function UILibrary.Load(GUITitle)
 			TextBoxForeground.Name = "TextBoxForeground"
 			TextBoxForeground.Size = UDim2.new(1,0,1,0)
 			TextBoxForeground.ImageColor3 = Color3.fromRGB(35,35,35)
-			TextBoxForeground.Parent = ButtonContainer
+			TextBoxForeground.Parent = TextBoxContainer
 			
 			local HiddenTextBox = TextBox(Text, 12)
 			HiddenTextBox.Parent = TextBoxForeground
