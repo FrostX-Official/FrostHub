@@ -417,7 +417,7 @@ function UILibrary.Load(GUITitle)
 			end)
 		end
 		
-		function PageLibrary.AddTextBox(Text, Callback, Parent, Underline)
+		function PageLibrary.AddTextBox(Text, Callback, Parent)
 			local TextBoxContainer = Frame()
 			TextBoxContainer.Name = Text.."TEXTBOX"
 			TextBoxContainer.Size = UDim2.new(1,0,0,20)
@@ -430,27 +430,18 @@ function UILibrary.Load(GUITitle)
 			TextBoxForeground.ImageColor3 = Color3.fromRGB(35,35,35)
 			TextBoxForeground.Parent = ButtonContainer
 			
-			if Underline then
-				local TextSize = TextService:GetTextSize(Text, 12, Enum.Font.Gotham, Vector2.new(0,0))
-			
-				local BottomEffect = Frame()
-				BottomEffect.Size = UDim2.new(0,TextSize.X,0,1)
-				BottomEffect.Position = UDim2.new(0.5,(-TextSize.X/2)-1,1,-1)
-				BottomEffect.BackgroundColor3 = Color3.fromRGB(255,255,255)
-				BottomEffect.BackgroundTransparency = 0.5
-				BottomEffect.Parent = TextBoxForeground
-			end
-			
 			local HiddenTextBox = TextBox(Text, 12)
 			HiddenTextBox.Parent = TextBoxForeground
 			
-			HiddenTextBox.FocusLost:Connect(function()
-				Callback(HiddenTextBox.Text)
-				Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(45,45,45)})
-				Tween(HiddenButton, {TextTransparency = 0.5})
-				wait(TweenTime)
-				Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(35,35,35)})
-				Tween(HiddenButton, {TextTransparency = 0})
+			HiddenTextBox.FocusLost:Connect(function(enterPressed)
+				if enterPressed then
+					Callback(HiddenTextBox.Text)
+					Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(45,45,45)})
+					Tween(HiddenButton, {TextTransparency = 0.5})
+					wait(TweenTime)
+					Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(35,35,35)})
+					Tween(HiddenButton, {TextTransparency = 0})
+				end
 			end)
 		end
 		
