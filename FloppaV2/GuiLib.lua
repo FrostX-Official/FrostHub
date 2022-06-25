@@ -135,6 +135,7 @@ end
 local function TextBox(Text, Size)
 	local NewTextButton = Instance.new("TextBox")
 	NewTextButton.PlaceholderText = Text
+	NewTextButton.Text = ""
 	NewTextButton.Font = MainFont
 	NewTextButton.TextColor3 = Color3.fromRGB(255,255,255)
 	NewTextButton.BackgroundTransparency = 1
