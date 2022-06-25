@@ -133,15 +133,15 @@ local function TextButton(Text, Size)
 end
 
 local function TextBox(Text, Size)
-	local NewTextBox = Instance.new("TextBox")
-	NewTextBox.Text = Text
-	NewTextBox.Font = MainFont
-	NewTextBox.TextColor3 = Color3.fromRGB(255,255,255)
-	NewTextBox.BackgroundTransparency = 1
-	NewTextBox.TextSize = Size or 12
-	NewTextBox.Size = UDim2.new(1,0,1,0)
-	NewTextBox.ZIndex = Level
-	return NewTextBox
+	local NewTextButton = Instance.new("TextBox")
+	NewTextButton.Text = Text
+	NewTextButton.Font = MainFont
+	NewTextButton.TextColor3 = Color3.fromRGB(255,255,255)
+	NewTextButton.BackgroundTransparency = 1
+	NewTextButton.TextSize = Size or 12
+	NewTextButton.Size = UDim2.new(1,0,1,0)
+	NewTextButton.ZIndex = Level
+	return NewTextButton
 end
 
 local function TextLabel(Text, Size)
