@@ -134,7 +134,7 @@ end
 
 local function TextBox(Text, Size)
 	local NewTextButton = Instance.new("TextBox")
-	NewTextButton.Text = Text
+	NewTextButton.PlaceholderText = Text
 	NewTextButton.Font = MainFont
 	NewTextButton.TextColor3 = Color3.fromRGB(255,255,255)
 	NewTextButton.BackgroundTransparency = 1
@@ -411,7 +411,8 @@ function UILibrary.Load(GUITitle)
 				Callback()
 				Tween(ButtonForeground, {ImageColor3 = Color3.fromRGB(45,45,45)})
 				Tween(HiddenButton, {TextTransparency = 0.5})
-				wait(TweenTime)
+			end)
+			HiddenButton.MouseButton1Up:Connect(function()
 				Tween(ButtonForeground, {ImageColor3 = Color3.fromRGB(35,35,35)})
 				Tween(HiddenButton, {TextTransparency = 0})
 			end)
