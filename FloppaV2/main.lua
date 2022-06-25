@@ -129,10 +129,12 @@ local function notification_new(title, text, duration)
     end
 end
 
+local getasset = getsynasset or getcustomasset
+
 writefile("FromizRug.png", game:HttpGet("https://raw.githubusercontent.com/FrostX-Official/roblox-scripts/main/FloppaV2/assets/FromizRug.png"))
 
 if workspace.Unlocks:FindFirstChild("Fancy Rug") then
-    workspace.Unlocks["Fancy Rug"].Rug.Texture = getcustomasset("FromizRug.png")
+    workspace.Unlocks["Fancy Rug"].Rug.Texture = getasset("FromizRug.png")
     delfile("FromizRug.png")
 end
 
