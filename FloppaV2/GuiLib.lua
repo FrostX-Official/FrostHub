@@ -444,7 +444,7 @@ function UILibrary.Load(GUITitle)
 			local HiddenTextBox = TextBox(Text, 12)
 			HiddenTextBox.Parent = TextBoxForeground
 			
-			HiddenTextBox.ReleaseFocus:Connect(function()
+			HiddenTextBox.FocusLost:Connect(function()
 				Callback(HiddenTextBox.Text)
 				Tween(TextBoxForeground, {ImageColor3 = Color3.fromRGB(45,45,45)})
 				Tween(HiddenButton, {TextTransparency = 0.5})
