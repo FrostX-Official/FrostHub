@@ -499,6 +499,8 @@ function UILibrary.Load(GUITitle)
 			function LabelLib.ChangeText(text)
 				HiddenLabel.Text = text
 			end
+			
+			return LabelLib
 		end
 		
 		function PageLibrary.AddDropdown(Text, ConfigurationArray, Callback)
@@ -760,7 +762,6 @@ function UILibrary.Load(GUITitle)
 				Tween(RightTick, {ImageTransparency = ThisToggle and 0 or 1})
 				Callback(ThisToggle)
 			end)
-			return LabelLib
 		end
 		
 		return PageLibrary
