@@ -12,11 +12,25 @@ getgenv().AutoSave = false
 getgenv().AutoSaveCooldown = false
 
 getgenv().AutoCollectMoney = false
+getgenv().AutoCollectMoneyFloppaInc = 1000000000
+
 getgenv().AutoFood = false
+getgenv().AutoFoodCooldown = false
+
+getgenv().AutoPlant = false
 getgenv().NoMoneySound = false
 getgenv().NoSound = false
 getgenv().AutoCleaner = false
+
+getgenv().AutoKill = false
+getgenv().AutoKillBuying = false
+
+getgenv().AutoSummon = false
+getgenv().AutoBackrooms = false
+getgenv().AutoUpgrade = false
+getgenv().AutoDJ = false
 getgenv().AutoPickup = false
+getgenv().AutoUse = false
 
 getgenv().AutoRoommate = false
 getgenv().AutoRoommateCooldown1 = false
@@ -29,7 +43,21 @@ getgenv().Item = ""
 getgenv().VaultTPBack = false
 getgenv().VaultFull = false
 
-getgenv().FloppaName = "FrostX"
+AutoVault_items = {"Milk",
+                    "Floppa Food",
+                    "Meteorite",
+                    "Money Bag",
+                    "Carrot",
+                    "Tomato",
+                    "Lettuce",
+                    "Noodles",
+                    "Chicken",
+                    "Backrooms Key",
+                    "Almond Water",
+                    "Catnip",
+                    "Mushroom"}
+
+getgenv().FloppaName = "FS V2 ON TOP!"
 
 -- OTHER
  
@@ -37,6 +65,7 @@ local SaveEvent = game:GetService("ReplicatedStorage").Events.Save
 local BuyEvent = game:GetService("ReplicatedStorage").Events.Unlock
 local CollectRentEvent = game:GetService("ReplicatedStorage").Events["Collect Rent"]
 local RaiseRentEvent = game:GetService("ReplicatedStorage").Events["Raise Rent"]
+local BingusViceEvent = game:GetService("ReplicatedStorage").Events["Mysterious Dialog"]
 
 local MainWindow = GuiLib.Load("FLOPPA SCRIPT V2", true)
 
@@ -55,67 +84,10 @@ local Credits2 = Credits.AddLabel("Idea - Frost X#6215")
 local CreditsOwn1 = Credits.AddLabel("Game Owner 1 - RealXyIo#0059")
 local CreditsOwn2 = Credits.AddLabel("Game Owner 2 - ShiiroShogun#1105")
 
-local Credits3 = Credits.AddLabel("Script Version: v1.6 (AutoUpgrade)")
+local Credits3 = Credits.AddLabel("Script Version: v1.7 (Watch github changelog below)")
+local Credits5 = Credits.AddLabel("FrostX-Official/roblox-scripts/blob/main/FloppaV2")
 
 local Credits3 = Credits.AddLabel("UI Lib - Kinlei#6459 (modified by Frost X#6215)")
-
--- MAKE PARTS
-
-local toiletPart = Instance.new("Part")
-toiletPart.Anchored = true
-toiletPart.CFrame = CFrame.new(-74.0611572, 76, -19.4405117)
-
-if not workspace:FindFirstChild("ToiletPart") then
-    toiletPart.Parent = workspace
-    toiletPart.Name = "ToiletPart"
-    toiletPart.Transparency = 1
-    toiletPart.CanCollide = false
-
-    local toiletPartBox = Instance.new("BoxHandleAdornment")
-    toiletPartBox.Adornee = toiletPart
-    toiletPartBox.Parent = toiletPart
-
-    local toiletPartGUI = Instance.new("BillboardGui")
-    toiletPartGUI.Parent = toiletPart
-    toiletPartGUI.Size = UDim2.new(0, 100, 0, 50)
-    toiletPartGUI.AlwaysOnTop = true
-    toiletPartGUI.MaxDistance = 30
-
-    local toiletPartGUItext = Instance.new("TextLabel")
-    toiletPartGUItext.Parent = toiletPartGUI
-    toiletPartGUItext.Size = UDim2.new(1, 0, 1, 0)
-    toiletPartGUItext.Text = "[FS V2] ToiletPart"
-else
-    toiletPart:Destroy()
-end
-
-local foodPart = Instance.new("Part")
-foodPart.Anchored = true
-foodPart.CFrame = CFrame.new(-40.3067436, 76, -19.1339455)
-
-if not workspace:FindFirstChild("FoodPart") then
-    foodPart.Parent = workspace
-    foodPart.Name = "FoodPart"
-    foodPart.Transparency = 1
-    foodPart.CanCollide = false
-
-    local foodPartBox = Instance.new("BoxHandleAdornment")
-    foodPartBox.Adornee = foodPart
-    foodPartBox.Parent = foodPart
-
-    local foodPartGUI = Instance.new("BillboardGui")
-    foodPartGUI.Parent = foodPart
-    foodPartGUI.Size = UDim2.new(0, 100, 0, 50)
-    foodPartGUI.AlwaysOnTop = true
-    foodPartGUI.MaxDistance = 30
-
-    local foodPartGUItext = Instance.new("TextLabel")
-    foodPartGUItext.Parent = foodPartGUI
-    foodPartGUItext.Size = UDim2.new(1, 0, 1, 0)
-    foodPartGUItext.Text = "[FS V2] FoodPart"
-else
-    foodPart:Destroy()
-end
 
 -- FUNCTIONS
 
@@ -129,12 +101,12 @@ local function notification_new(title, text, duration)
     end
 end
 
-local getasset = getsynasset or getcustomasset
+local PremiumLabel = Premium.AddLabel("There is no premium you bum, it's open-source!")
 
 writefile("FromizRug.png", game:HttpGet("https://raw.githubusercontent.com/FrostX-Official/roblox-scripts/main/FloppaV2/assets/FromizRug.png"))
 
 if workspace.Unlocks:FindFirstChild("Fancy Rug") then
-    workspace.Unlocks["Fancy Rug"].Rug.Texture = getasset("FromizRug.png")
+    workspace.Unlocks["Fancy Rug"].Rug.Texture = getcustomasset("FromizRug.png")
     delfile("FromizRug.png")
 end
 
@@ -155,7 +127,6 @@ local ShopBuySword = Shop.AddButton("Buy Sword", function()
     local last_CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Village.SwordStore.Villager.HumanoidRootPart.CFrame
-    wait(1)
     fireproximityprompt(workspace.Village.SwordStore.Villager.HumanoidRootPart.ProximityPrompt, 1)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = last_CFrame
 end)
@@ -174,18 +145,18 @@ local MiscNostalgicMode = Misc.AddButton("Nostalgic Mode (Fall Ambience)", funct
         music.Name = "Nostalgic"
         music.SoundId = "rbxassetid://9802437816"
         music.Parent = workspace
-        music.TimePosition = 30
+        music.TimePosition = 0
         music.Looped = true
+        music.Volume = 0
+
+        music:Play()
 
         notification_new("Nostalgic mode", "Toggled ON", 2)
 
         repeat
-            music.Volume += 0.1
+            music.Volume += 0.01
             wait(0.2)
-        until music.Volume >= 1
-
-        music.Volume = 1
-        music:Play()
+        until music.Volume >= 0.75
 
         while wait(1) do
             if workspace.Ambience.Playing == true then
@@ -201,7 +172,7 @@ local MiscRenameFloppas = Misc.AddTextBox("Floppa Name", function(text)
     getgenv().FloppaName = text
 end)
 
-local MiscRenameFloppas = Misc.AddButton("Rename All Baby Floppas", function()
+local MiscRenameFloppas = Misc.AddButton("Rename", function()
     for i, v in pairs(workspace.Unlocks:GetChildren()) do
         if v.Name == "Baby Floppa" then
             v.Display.Frame.NameLabel.Text = getgenv().FloppaName
@@ -219,16 +190,16 @@ local MainStoreEverything = Main.AddButton("Store Everything in Vault", function
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Unlocks["Small Vault"].Base.CFrame
     wait(1)
     for i, item in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-        item.Parent = game.Players.LocalPlayer.Character
-        fireproximityprompt(workspace.Unlocks["Small Vault"].Base.ProximityPrompt, 1)
+        if item.Name ~= "Excalibur" then
+            item.Parent = game.Players.LocalPlayer.Character
+            fireproximityprompt(workspace.Unlocks["Small Vault"].Base.ProximityPrompt, 1)
+        end
     end
 
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = last_CFrame
 end)
 
-items = {"Milk", "Floppa Food", "Meteorite"}
-
-local MainItemToVault = Main.AddDropdown("Auto-Vault Item", items, function(selected)
+local MainItemToVault = Main.AddDropdown("Auto-Vault Item", AutoVault_items, function(selected)
     getgenv().Item = selected
 end)
 
@@ -282,6 +253,9 @@ local MainAutoClick = Main.AddToggle("AutoClicker", false, function(toggled)
         getgenv().AutoClicker = false
     end
 end)
+
+local AutoCollect = Main.AddLabel("Auto-Collecting")
+
 local MainAutoCollectMoney = Main.AddToggle("AutoCollect Money", false, function(toggled)
     if toggled then
         getgenv().AutoCollectMoney = true
@@ -289,6 +263,12 @@ local MainAutoCollectMoney = Main.AddToggle("AutoCollect Money", false, function
         getgenv().AutoCollectMoney = false
     end
 end)
+local MainAutoCollectMoneyFloppaInc = Main.AddSlider("AutoCollect Floppa Inc", {Min = 1, Max = 100000000000, Def = 10000000000}, function(Value)
+    getgenv().AutoCollectMoneyFloppaInc = Value
+end)
+
+local AutoCollect2 = Main.AddLabel("~ ⭕ ~")
+
 local MainAutoUpgrade = Main.AddToggle("AutoUpgrade", false, function(toggled)
     if toggled then
         getgenv().AutoUpgrade = true
@@ -296,11 +276,11 @@ local MainAutoUpgrade = Main.AddToggle("AutoUpgrade", false, function(toggled)
         getgenv().AutoUpgrade = false
     end
 end)
-local MainAutoSave = Main.AddToggle("AutoSave (LAG!)", false, function(toggled)
+local MainAutoDJ = Main.AddToggle("AutoDJ", false, function(toggled)
     if toggled then
-        getgenv().AutoSave = true
+        getgenv().AutoDJ = true
     else
-        getgenv().AutoSave = false
+        getgenv().AutoDJ = false
     end
 end)
 
@@ -311,12 +291,26 @@ local MainAutoFood = Main.AddToggle("AutoFood", false, function(toggled)
         getgenv().AutoFood = false
     end
 end)
+local MainAutoPlant = Main.AddToggle("AutoPlant", false, function(toggled)
+    if toggled then
+        getgenv().AutoPlant = true
+    else
+        getgenv().AutoPlant = false
+    end
+end)
 
 local MainAutoCleaner = Main.AddToggle("AutoCleaner", false, function(toggled)
     if toggled then
         getgenv().AutoCleaner = true
     else
         getgenv().AutoCleaner = false
+    end
+end)
+local MainAutoBackrooms = Main.AddToggle("AutoBackrooms", false, function(toggled)
+    if toggled then
+        getgenv().AutoBackrooms = true
+    else
+        getgenv().AutoBackrooms = false
     end
 end)
 
@@ -333,6 +327,28 @@ local MainAutoRoommate = Main.AddToggle("AutoRoommate (OP)", false, function(tog
         getgenv().AutoRoommate = true
     else
         getgenv().AutoRoommate = false
+    end
+end)
+local MainAutoUse = Main.AddToggle("AutoUse (maybe auto-equip lol)", false, function(toggled)
+    if toggled then
+        getgenv().AutoUse = true
+    else
+        getgenv().AutoUse = false
+    end
+end)
+
+local MainAutoKill = Main.AddToggle("AutoKill (Use when raid/boss)", false, function(toggled)
+    if toggled then
+        getgenv().AutoKill = true
+    else
+        getgenv().AutoKill = false
+    end
+end)
+local MainAutoSummon = Main.AddToggle("AutoSummon (auto summons boss)", false, function(toggled)
+    if toggled then
+        getgenv().AutoSummon = true
+    else
+        getgenv().AutoSummon = false
     end
 end)
 
@@ -357,13 +373,44 @@ end)
 -- TOGGLES FUNCTIONS
 
 while wait() do
+    local getPrize = workspace:FindFirstChild("Bingus Cult Prize")
+
+    if getPrize then
+        if #getPrize:GetChildren() <= 0 then
+            getPrize:Destroy()
+        end
+    end
+
     if getgenv().AutoPet then
-        if workspace.Floppa.Configuration.Happiness.Value < 51 and workspace.Floppa.Configuration.Hunger.Value > 51 then
+        if workspace.Floppa.Configuration.Happiness.Value < 51 and workspace.Floppa.Configuration.Hunger.Value > 35 then
             local prox = workspace.Floppa.HumanoidRootPart:WaitForChild("ProximityPrompt")
             if prox.ActionText == "Pet" then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Floppa.HumanoidRootPart.CFrame + Vector3.new(0, 1, 0)
                 fireproximityprompt(prox, 1)
             end
+        end
+    end
+    if getgenv().AutoDJ then
+        local DJ = workspace.Unlocks:FindFirstChild("DJ El Gato")
+
+        if DJ then
+            if DJ.Cooldown.Value == 0 then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = DJ.Primary.CFrame + Vector3.new(0, 2, 0)
+                local prox = DJ.Primary.ProximityPrompt
+                fireproximityprompt(prox, 1)
+            end
+        end
+    end
+    if getgenv().AutoBackrooms then
+        local BackroomsLevel = game.Players.LocalPlayer.BackroomsLevel.Value
+        if BackroomsLevel < 4 then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Backrooms.Rooms["Backrooms 10"].Exit.Primary.CFrame
+            local prox = workspace.Backrooms.Rooms["Backrooms 10"].Exit.Frame:FindFirstChild("ProximityPrompt")
+            fireproximityprompt(prox, 1)
+        else
+            local prox = workspace.Backrooms["Almond Water"]:FindFirstChild("ProximityPrompt")
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Backrooms["Almond Water"].CFrame
+            fireproximityprompt(prox, 1)
         end
     end
     if getgenv().AutoUpgrade then
@@ -439,19 +486,89 @@ while wait() do
         end
     end
     if getgenv().AutoCollectMoney then
+        local detect_floppainc = workspace.Unlocks:FindFirstChild("Floppa Inc")
+        if detect_floppainc then
+            if detect_floppainc.Profits.Value >= getgenv().AutoCollectMoneyFloppaInc then
+                fireproximityprompt(detect_floppainc.Board.Prompt, 1)
+            end
+        end
         for i, v in pairs(workspace:GetChildren()) do
             if v.Name == "Money" or v.Name == "Money Bag" or v.Name == "Rent" then
-                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v)
+                local touchablePart = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+                firetouchinterest(touchablePart, v)
+            end
+            if v.Name == "Bingus Cult Prize" then
+                for i, prize in pairs(v:GetChildren()) do
+                    if prize.Name == "Money Bag" then
+                        local touchablePart = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+                        firetouchinterest(touchablePart, prize.Handle)
+                    end
+                end
             end
         end
     end
-    if getgenv().AutoSave then
-        if not getgenv().AutoSaveCooldown then
-            SaveEvent:FireServer()
-            notification_new("AutoSave", "Saved.", 1)
-            getgenv().AutoSaveCooldown = true
-            wait(10)
-            getgenv().AutoSaveCooldown = false
+    if getgenv().AutoKill then
+        if #workspace.Enemies:GetChildren() > 0 then
+            for i, v in pairs(workspace.Enemies:GetChildren()) do
+                if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    local hitPart = v:FindFirstChild("HumanoidRootPart") or v:FindFirstChild("Torso")
+
+                    if hitPart then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = hitPart.CFrame
+
+                        local getSword = game.Players.LocalPlayer.Character:FindFirstChild("Excalibur") or game.Players.LocalPlayer.Character:FindFirstChild("Sword")
+                        local getSwordBackpack = game.Players.LocalPlayer.Backpack:FindFirstChild("Excalibur") or game.Players.LocalPlayer.Backpack:FindFirstChild("Sword")
+
+                        if not getSword then
+                            if getSwordBackpack then
+                                getSwordBackpack.Parent = game.Players.LocalPlayer.Character
+                            else
+                                if not getgenv().AutoKillBuying then
+                                    getgenv().AutoKillBuying = true
+                                    local last_CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Village.SwordStore.Villager.HumanoidRootPart.CFrame
+                                    fireproximityprompt(workspace.Village.SwordStore.Villager.HumanoidRootPart.ProximityPrompt, 1)
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = last_CFrame
+                                    wait(0.2)
+                                    getgenv().AutoKillBuying = false
+                                end
+                            end
+                        else
+                            if getSword.Parent == game.Players.LocalPlayer.Character then
+                                if game.Players.LocalPlayer.Character.Humanoid.Health > 2 then
+                                    getSword:Activate()
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    if getgenv().AutoUse then
+        for i, item in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+            if item.Name == "Almond Water" then
+                if workspace.Floppa.Configuration.Lives.Value < 99 then
+                    if not getgenv().AutoVault then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Floppa.HumanoidRootPart.CFrame
+                        item.Parent = game.Players.LocalPlayer.Character
+                        local prox = workspace.Floppa.HumanoidRootPart:WaitForChild("ProximityPrompt")
+                        wait(0.5)
+                        if prox.ActionText == "Feed Almond Water" then
+                            fireproximityprompt(prox, 1)
+                        end
+                    end
+                end
+            end
+            if item.Name == "Money Bag" then
+                local findMoneyInChar = game.Players.LocalPlayer.Character:FindFirstChild("Money Bag")
+                if not findMoneyInChar then
+                    if not getgenv().AutoVault then
+                        item.Parent = game.Players.LocalPlayer.Character
+                    end
+                end
+            end
         end
     end
 
@@ -464,34 +581,87 @@ while wait() do
         for i, v in pairs(workspace:GetChildren()) do
             if v.Name == "Meteorite" then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Handle.CFrame
+            elseif v.Name == "Milk Delivery" then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Crate.CFrame
+                fireproximityprompt(v.Crate.ProximityPrompt, 1)
             end
         end
     end
 
-    if getgenv().AutoFood then
-        local findFood1 = game.Players.LocalPlayer.Backpack:FindFirstChild("Floppa Food")
-        local findFood2 = game.Players.LocalPlayer.Character:FindFirstChild("Floppa Food")
+    if getgenv().AutoSummon then
+        local check_bingus = workspace.Unlocks:FindFirstChild("Cursed Altar")
 
-        if findFood1 then
-            if workspace["Key Parts"].Bowl.Part.Transparency == 1 then
-                findFood1.Parent = game.Players.LocalPlayer.Character
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = foodPart.CFrame
-                fireproximityprompt(workspace["Key Parts"].Bowl.Part.ProximityPrompt, 1)
+        if check_bingus then
+            if not check_bingus.Activated.Value then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = check_bingus.Bingus.HumanoidRootPart.CFrame + Vector3.new(0, 2, 0)
+                fireproximityprompt(check_bingus.Bingus.HumanoidRootPart.ProximityPrompt, 1)
             end
         else
-            if findFood2 then
-                if workspace["Key Parts"].Bowl.Part.Transparency == 1 then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = foodPart.CFrame
-                    fireproximityprompt(workspace["Key Parts"].Bowl.Part.ProximityPrompt, 1)
-                else
-                    game.Players.LocalPlayer.Character["Floppa Food"].Parent = game.Players.LocalPlayer.Backpack
-                end
-            else  
-                if workspace["Key Parts"].Bowl.Part.Transparency == 1 then
-                    BuyEvent:FireServer("Floppa Food", "the_interwebs")
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = foodPart.CFrame
-                    fireproximityprompt(workspace["Key Parts"].Bowl.Part.ProximityPrompt, 1)
+            BingusViceEvent:FireServer()
+        end
+    end
 
+    if getgenv().AutoPlant then
+        for i, item in pairs(workspace.Unlocks:GetChildren()) do
+            if item.Name == "Planter" then 
+                if item.Sequence.Value < 10 or item.Sequence.Value > 49 then
+                    if item.Plant.Value == "" or item.Plant.Value == nil then
+                        for i, tool in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                            if tool.Name:match("Seed") or tool.Name:match("Spore") then
+                                tool.Parent = game.Players.LocalPlayer.Character
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = item.Soil.CFrame + Vector3.new(0, 2, 0)
+                                fireproximityprompt(item.Soil.ProximityPrompt, 1)
+                            end
+                        end
+                    else
+                        if item.Growth.Value >= 100 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = item.Soil.CFrame + Vector3.new(0, 2, 0)
+                            fireproximityprompt(item.Soil.ProximityPrompt, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+
+    if getgenv().AutoFood then
+        if not getgenv().AutoFoodCooldown then
+            local findFood1 = game.Players.LocalPlayer.Backpack:FindFirstChild("Floppa Food")
+            local findFood2 = game.Players.LocalPlayer.Character:FindFirstChild("Floppa Food")
+
+            if findFood1 then
+                if workspace["Key Parts"].Bowl.Part.Transparency == 1 then
+                    getgenv().AutoFoodCooldown = true
+                    findFood1.Parent = game.Players.LocalPlayer.Character
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Key Parts"].Bowl.Part.CFrame + Vector3.new(0, 4, 0)
+                    fireproximityprompt(workspace["Key Parts"].Bowl.Part.ProximityPrompt, 1)
+                    wait(0.2)
+                    getgenv().AutoFoodCooldown = false
+                end
+            else
+                if findFood2 then
+                    if workspace["Key Parts"].Bowl.Part.Transparency == 1 then
+                        getgenv().AutoFoodCooldown = true
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Key Parts"].Bowl.Part.CFrame + Vector3.new(0, 4, 0)
+                        fireproximityprompt(workspace["Key Parts"].Bowl.Part.ProximityPrompt, 1)
+                        wait(0.2)
+                        getgenv().AutoFoodCooldown = false
+                    else
+                        getgenv().AutoFoodCooldown = true
+                        game.Players.LocalPlayer.Character["Floppa Food"].Parent = game.Players.LocalPlayer.Backpack
+                        wait(0.2)
+                        getgenv().AutoFoodCooldown = false
+                    end
+                else  
+                    if workspace["Key Parts"].Bowl.Part.Transparency == 1 then
+                        getgenv().AutoFoodCooldown = true
+                        BuyEvent:FireServer("Floppa Food", "the_interwebs")
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Key Parts"].Bowl.Part.CFrame + Vector3.new(0, 4, 0)
+                        fireproximityprompt(workspace["Key Parts"].Bowl.Part.ProximityPrompt, 1)
+                        wait(0.2)
+                        getgenv().AutoFoodCooldown = false
+                    end
                 end
             end
         end
@@ -530,14 +700,14 @@ while wait() do
         local findPoop2 = workspace:FindFirstChild("Poop")
 
         if findPoop then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = toiletPart.CFrame
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = findPoop.PoopPart.CFrame + Vector3.new(0, 3, 0)
             local prox = findPoop:WaitForChild("ProximityPrompt")
             fireproximityprompt(findPoop.ProximityPrompt, 1)
             notification_new("Auto-Cleaner", "Cleaned poop which is in litter box.", 0.5)
         end
         if findPoop2 then
             findPoop2.PoopPart.CanCollide = false
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = findPoop2.PoopPart.CFrame
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = findPoop2.PoopPart.CFrame + Vector3.new(0, 3, 0)
             local prox = findPoop2:WaitForChild("ProximityPrompt")
             fireproximityprompt(prox, 1)
             notification_new("Auto-Cleaner", "Cleaned poop which isn't in litter box.", 0.5)
@@ -545,20 +715,23 @@ while wait() do
     end
 
     if getgenv().AutoRoommate then
-        if workspace.Unlocks.Roommate["Can Raise"].Value == true and workspace.Unlocks.Roommate["Amt"].Value < 1000000000 then
-            if getgenv().AutoRoommateCooldown1 == false then
-                getgenv().AutoRoommateCooldown1 = true
-                RaiseRentEvent:FireServer()
-                notification_new("AutoRoommate", "Raised rent of roommate.", 0.5)
-                getgenv().AutoRoommateCooldown1 = false
+        local check = workspace.Unlocks:FindFirstChild("Roommate")
+        if check then
+            if workspace.Unlocks.Roommate["Can Raise"].Value == true and workspace.Unlocks.Roommate["Amt"].Value < 1000000000 then
+                if getgenv().AutoRoommateCooldown1 == false then
+                    getgenv().AutoRoommateCooldown1 = true
+                    RaiseRentEvent:FireServer()
+                    notification_new("AutoRoommate", "Raised rent of roommate.", 0.5)
+                    getgenv().AutoRoommateCooldown1 = false
+                end
             end
-        end
-        if workspace.Unlocks.Roommate["Can Collect"].Value == true then
-            if getgenv().AutoRoommateCooldown2 == false then
-                getgenv().AutoRoommateCooldown2 = true
-                CollectRentEvent:FireServer()
-                notification_new("AutoRoommate", "Collected roommate money.", 0.5)
-                getgenv().AutoRoommateCooldown2 = false
+            if workspace.Unlocks.Roommate["Can Collect"].Value == true then
+                if getgenv().AutoRoommateCooldown2 == false then
+                    getgenv().AutoRoommateCooldown2 = true
+                    CollectRentEvent:FireServer()
+                    notification_new("AutoRoommate", "Collected roommate money.", 0.5)
+                    getgenv().AutoRoommateCooldown2 = false
+                end
             end
         end
     end
@@ -569,7 +742,7 @@ while wait() do
         if getVault then
             for i, item in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                 if getgenv().Item ~= "" and item.Name == getgenv().Item then
-                    if #game.ReplicatedStorage["Small Vault"]:GetChildren() ~= 100 then
+                    if #game.ReplicatedStorage["Small Vault"]:GetChildren() < 100 then
                         getgenv().VaultFull = false
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Unlocks["Small Vault"].Base.CFrame
 
@@ -588,6 +761,29 @@ while wait() do
                     end
                 end
             end
+        end
+    end
+
+    local findVault = workspace.Unlocks:FindFirstChild("Small Vault")
+
+    if findVault then
+        local findGui = findVault.Base:FindFirstChildWhichIsA("BillboardGui")
+        if not findGui then
+            local gui = Instance.new("BillboardGui")
+            gui.AlwaysOnTop = true 
+            gui.MaxDistance = 30
+            gui.Size = UDim2.new(0, 100, 0, 50)
+            gui.StudsOffset = Vector3.new(0, 3.5, 0)
+            gui.Parent = findVault.Base
+
+            local text = Instance.new("TextLabel")
+            text.Parent = gui
+            text.Text = "Loading FS V2."
+            text.BackgroundTransparency = 1
+            text.TextScaled = true
+            text.Size = UDim2.new(1, 0, 1, 0)
+        else
+            findGui.TextLabel.Text = #game.ReplicatedStorage["Small Vault"]:GetChildren().."/100"
         end
     end
 end
