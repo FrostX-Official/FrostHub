@@ -1,6 +1,7 @@
 # FLOPPA SCRIPT V2
 - Open-Source roblox script
 - Script for a game called "raise a floppa 2"
+- Update everyday at 🕡 06:30 GMT
 
 💫 This project is open-source, please, do not steal code for your own exploits, and make credits of me scripted something. 💫
 
@@ -30,7 +31,7 @@
 - NoMoneySound
 — Removes annoying money sound when clicking Floppas
 
-- NoRoommate
+- AutoRoommate (OP)
 — AutoRaise roommate rent and AutoCollect it. (recommended to use with AutoCollect Money)
 
 - AutoUse
