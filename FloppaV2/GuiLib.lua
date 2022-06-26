@@ -477,6 +477,8 @@ function UILibrary.Load(GUITitle)
 			end)
 		end
 		
+		local LabelLib = {}
+		
 		function PageLibrary.AddLabel(Text)
 			local LabelContainer = Frame()
 			LabelContainer.Name = Text.."LABEL"
@@ -492,6 +494,10 @@ function UILibrary.Load(GUITitle)
 			
 			local HiddenLabel = TextLabel(Text, 12)
 			HiddenLabel.Parent = LabelForeground
+			
+			function LabelLib.ChangeText(text)
+				HiddenLabel.Text = text
+			end
 		end
 		
 		function PageLibrary.AddDropdown(Text, ConfigurationArray, Callback)
@@ -752,7 +758,8 @@ function UILibrary.Load(GUITitle)
 				Tween(EffectFrame, {BackgroundColor3 = ThisToggle and Color3.fromRGB(0,255,109) or Color3.fromRGB(255,160,160)})
 				Tween(RightTick, {ImageTransparency = ThisToggle and 0 or 1})
 				Callback(ThisToggle)
-			end)	
+			end)
+			return LabelLib
 		end
 		
 		return PageLibrary
