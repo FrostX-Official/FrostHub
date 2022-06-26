@@ -21,6 +21,36 @@ local IconLibraryID2 = "rbxassetid://3926307971"
 
 local MainFont = Enum.Font.Gotham
 
+local abbs = {
+	K = 4,
+	M = 7,
+	B = 10,
+	T = 13,
+	Qa = 16,
+	Qu = 19
+}
+
+function Abbreviate(number)
+	local text = tostring(math.floor(number))
+	local chosenAbb
+	for abb, digits in pairs(abbs) do
+		if #text >= digits and #text < (digits + 3) then
+			chosenAbb = abb
+			break
+		end
+	end
+	if chosenAbb then
+		local digits = abbs[chosenAbb]
+		local rounded = math.floor(tonumber(number) / 10 ^ (digits - 2)) * 10 ^ (digits - 2)
+		local return_data = string.format("%.1f", rounded / 10 ^ (digits - 1))..chosenAbb
+		text = return_data
+	else
+		local return_data = number
+		text = return_data
+	end
+	return text
+end
+
 local function GetXY(GuiObject)
 	local X, Y = Mouse.X - GuiObject.AbsolutePosition.X, Mouse.Y - GuiObject.AbsolutePosition.Y
 	local MaxX, MaxY = GuiObject.AbsoluteSize.X, GuiObject.AbsoluteSize.Y
@@ -651,7 +681,7 @@ function UILibrary.Load(GUITitle)
 				local X, Y, XScale, YScale = GetXY(SliderButton)
 				local Value = math.floor(Minimum + ((Maximum - Minimum) * XScale))
 				Callback(Value)
-				SliderButton.Text = Text..": "..tostring(Value)
+				SliderButton.Text = Text..": "..Abbreviate(Value)
 				local TargetSize = UDim2.new(XScale,0,1,0)
 				Tween(SliderFill, {Size = TargetSize})
 				local SliderMove, SliderKill
@@ -660,7 +690,7 @@ function UILibrary.Load(GUITitle)
 					local X, Y, XScale, YScale = GetXY(SliderButton)
 					local Value = math.floor(Minimum + ((Maximum - Minimum) * XScale))
 					Callback(Value)
-					SliderButton.Text = Text..": "..tostring(Value)
+					SliderButton.Text = Text..": "..Abbreviate(Value)
 					local TargetSize = UDim2.new(XScale,0,1,0)
 					Tween(SliderFill, {Size = TargetSize})
 				end)
