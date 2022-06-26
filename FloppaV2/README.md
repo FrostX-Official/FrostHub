@@ -22,6 +22,9 @@
 - AutoFood
 — Automatically fill Floppa bowl when it's not full
 
+- AutoPlant
+— Automatically plants seeds and harvests plants (laggy)
+
 - AutoCleaner
 — Cleans Floppa's poop :flushed:
 
