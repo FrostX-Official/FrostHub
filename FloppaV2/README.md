@@ -22,7 +22,7 @@
 — Automatically fill Floppa bowl when it's not full
 
 - AutoCleaner
-— Cleans poop around house :flushed:
+— Cleans Floppa's poop :flushed:
 
 - AutoBackrooms
 — Automatically completes backrooms and getting "Almond Water".
