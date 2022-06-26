@@ -477,9 +477,10 @@ function UILibrary.Load(GUITitle)
 			end)
 		end
 		
-		local LabelLib = {}
 		
 		function PageLibrary.AddLabel(Text)
+			local LabelLib = {}
+			
 			local LabelContainer = Frame()
 			LabelContainer.Name = Text.."LABEL"
 			LabelContainer.Size = UDim2.new(1,0,0,20)
