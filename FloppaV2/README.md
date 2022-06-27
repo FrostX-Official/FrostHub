@@ -13,6 +13,11 @@
 — Also there's (Always) version which always pets the Floppa.
 ㅤ
 
+- Remove Sick/Remove Cold/Remove Hot
+
+— Removes negative effects (moodlets) from Floppa.
+ㅤ
+
 - AutoClicker
 
 — Automatically clicks on the Floppa and Floppa's babies.
@@ -114,33 +119,17 @@
 — (It's not for notifications, do not bug report if there's a problem with debug mode, it's not for using in-game)
 ㅤ
 
-# Latest ChangeLog (1.7)
+# Latest ChangeLog (1.8)
 
-[+] AutoKill
+[!] New tab "Cooking"
 
-[+] AutoBackrooms
-
-[+] AutoSummon
-
-[+] AutoUse
-
-[+] AutoPlant
-
-[+] AutoDJ
+— You can cook any food with ingredients from vault in there.
 ㅤ
 
-[!] Auto-Vaulting:
-
-— Added alot of items
-
-— Bugfixes
+[+] Remove negative moodlets in Main tab.
 ㅤ
 
-[!] AutoCollect Money:
+[+] A lot of more teleports
+ㅤ
 
-— Now auto collecting Floppa Inc profits.
-
-— Able to customize collecting settings
-
-
-[!] Optimization (A lot of code lines are gone now for optimization :D)
+[!] Optimization (Optimizing script every update lol)
