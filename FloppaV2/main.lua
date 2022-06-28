@@ -19,7 +19,7 @@ local function GetURL(scripturl)
 		end
 		return readfile("FloppaV2/"..scripturl)
 	else
-		local res = game:HttpGet("raw.githubusercontent.com/FrostX-Official/roblox-scripts/main/FloppaV2/"..scripturl, true)
+		local res = game:HttpGet("https://raw.githubusercontent.com/FrostX-Official/roblox-scripts/main/FloppaV2/"..scripturl, true)
 		assert(res ~= "404: Not Found", "File not found")
 		return res
 	end
