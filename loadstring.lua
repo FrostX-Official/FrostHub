@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/FrostX-Official/FrostHub/main/main.lua"), true)()
