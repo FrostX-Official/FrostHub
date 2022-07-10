@@ -1,5 +1,5 @@
-# roblox-scripts
-My scripts for roblox.
+# FrostHub
+FrostHub - My first hub for only 1 game right now.
 
 
 FLOPPA V2 ~
