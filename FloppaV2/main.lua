@@ -399,7 +399,7 @@ local CookingCake = Cooking.AddButton("Cake", function()
         CookingEvent:FireServer("Add Ingredient", "Flour")
         wait(0.2)
         SafeEvent:FireServer(game.ReplicatedStorage["Small Vault"]["Sugar"])
-        CookingEvent:FireServer("Add Ingredient", "Sugar)
+        CookingEvent:FireServer("Add Ingredient", "Sugar")
 
         wait(0.1)
 
