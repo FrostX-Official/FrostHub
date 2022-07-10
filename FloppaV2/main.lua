@@ -1,7 +1,7 @@
 -- Floppa V2 by Frost X#6215 -- Credits to Xylex (Roblox VapeV4 Owner) for GitHub scripts and functions.
 
 if getgenv().Executed then
-    error("[FS V2] Script already Executed!")
+    warn("[FS V2] Script already Executed!")
     return
 else
     getgenv().Executed = true
