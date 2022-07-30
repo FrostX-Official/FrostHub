@@ -28,20 +28,26 @@ getgenv().FrostHubStatus = "Status: Loading Hub"
 local MainWindow = GuiLib.Load("FrostHub", true)
 local Status = MainWindow.AddPage("Status", false)
 
-local Status = Status.AddLabel("Status: Loading Hub")
+local StatusText = Status.AddLabel("Status: Loading Hub")
 
 if game.PlaceId == 9772878203 then
     consoleprint("Loading Floppa Script V2  ")
     loadstring(FloppaV2Sc, true)()
     getgenv().FrostHubStatus = "Status: Loaded script for game 'raise a floppa 2'"
+    wait(2)
+    rconsoleclose()
+    MainWindow.Delete()
 else
     consoleprint("FrostHub not supported in this game")
     print("FrostHub not supported in this game")
     getgenv().FrostHubStatus = "Error: FrostHub not supported in this game"
+    wait(2)
+    rconsoleclose()
+    MainWindow.Delete()
 end
 
 while wait() do
-    if Status then
-        Status.ChangeText(getgenv().FrostHubStatus)
+    if StatusText then
+        StatusText.ChangeText(getgenv().FrostHubStatus)
     end
 end
