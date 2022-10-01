@@ -1,7 +1,7 @@
 # FLOPPA SCRIPT V2
 - Open-Source roblox script
 - Script for a game called "raise a floppa 2"
-- Update everyday at 🕘 09:00 GMT
+- Update everyday at 🕘 09:00 GMT (dead script lmfaooo)
 
 💫 This project is open-source, please, do not steal code for your own exploits, and make credits of me scripted something. 💫
 ㅤ
