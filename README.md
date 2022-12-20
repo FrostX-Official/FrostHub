@@ -1,9 +1,17 @@
-# FrostHub
-FrostHub - My first hub for only 1 game right now.
+<div align="center">
+  <h1>FrostHub</h1>
+</div>
 
+<div align="center">
+    <a href="https://discord.gg/6ex8fQ5"><img src="https://img.shields.io/discord/716222001903304755?logo=discord" alt="Discord"/></a>
+    <br>
+    <img src="https://img.shields.io/github/last-commit/FrostX-Official/FrostHub" alt="GitHub last commit"/>
+    <img src="https://img.shields.io/github/contributors/FrostX-Official/FrostHub" alt="GitHub contributors"/>
+    <br>
+    <img src="https://img.shields.io/github/languages/code-size/FrostX-Official/FrostHub" alt="GitHub code size in bytes"/>
+</div>
 
-FLOPPA V2 ~
-- Open-Source roblox script
-- Script for a game called "raise a floppa 2"
-
-~ More scripts in github soon ~
+<div align="center">
+  <h2>FLOPPA V2</h2>
+  <h4>Open-Source roblox script<br>Script for a game called "raise a floppa 2"</h4>
+</div>
