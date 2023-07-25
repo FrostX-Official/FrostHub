@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-    <a href="https://discord.gg/B8Ggs8GXG9"><img src="https://img.shields.io/discord/716222001903304755?logo=discord" alt="Discord"/></a>
+    <a href="https://discord.gg/B8Ggs8GXG9"><img src="https://img.shields.io/discord/1093209404112912434?logo=discord" alt="Discord"/></a>
     <br>
     <img src="https://img.shields.io/github/last-commit/FrostX-Official/FrostHub" alt="GitHub last commit"/>
     <img src="https://img.shields.io/github/contributors/FrostX-Official/FrostHub" alt="GitHub contributors"/>
